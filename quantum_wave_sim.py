@@ -34,9 +34,11 @@ def update(frame):
     laplacian = (np.roll(psi, 1) - 2 * psi + np.roll(psi, -1)) / dx**2
     psi = psi + 1j * 0.5 * laplacian * dt
 
-    prob = np.abs(psi)**2
-    prob /= prob.max()
+prob = np.abs(psi)**2
 
+# prevent divide-by-zero
+if np.max(prob) > 0:
+    prob = prob / np.max(prob)
     line.set_ydata(prob)
     return line,
 
